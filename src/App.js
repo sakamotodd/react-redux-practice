@@ -1,29 +1,29 @@
-import React from 'react'
+import React, { Component } from 'react';
 
+const App = () => <Counter></Counter>;
 
-const App = () => { 
-  const profiles = [　
-    {name: "Taro", age: 10},
-    {name: "Hanako", age: 5},
-    {name: "Noname"},
-]
-  return (
-    <div>
-     {
-       profiles.map((profile, index) => {
-         return<User name={profile.name} age={profile.age} key={index} />
-       })
-     }
-    </div>
-  )
-}
-
-const User = (props) => {
-  return <div>Hi, I am {props.name}, and {props.age} years old!</div>
-}
-
-User.defaultProps = {
-  age: 1
+class Counter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0 };
+  }
+  handlePlusButton = () => {
+    const currentCount = this.state.count;
+    this.setState({count: currentCount + 1})
+  }
+  handleButton = () => {
+    const currentCount = this.state.count;
+    this.setState({count: currentCount - 1})
+  }
+  render() {
+    return (
+      <React.Fragment>
+        <div>count: {this.state.count}</div>
+        <button onClick={this.handlePlusButton}>+1</button>
+        <button onClick={this.handleButton}>-1</button>
+      </React.Fragment>
+    );
+  }
 }
 
 export default App;
