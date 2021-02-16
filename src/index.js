@@ -5,8 +5,9 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk'
 
 import './index.css';
-import EventIndex from './components/events_index';
+import EventIndex from './components/event_index';
 import reducer from './reducers';
+
 
 const store = createStore(reducer, applyMiddleware(thunk));
 ReactDOM.render(
@@ -16,3 +17,4 @@ ReactDOM.render(
 
   document.getElementById('root')
 );
+
