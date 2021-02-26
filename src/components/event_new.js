@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import { postEvent } from '../actions';
 
 class EventNew extends Component {
-    constructor(props){
-        super(props)
-        this.onSubmit = this.onSubmit.bind(this)
-    }
+  constructor(props) {
+    super(props);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
   renderField(field) {
     const {
       input,
@@ -18,20 +18,20 @@ class EventNew extends Component {
       //touchedはredux-form特有のプロパティで一回でも触ったらtouched状態
     } = field;
     return (
-    <div>
-        <input {...input} placeholder={label} type={type}/>
+      <div>
+        <input {...input} placeholder={label} type={type} />
         {touched && error && <span>{error}</span>}
-    </div>
-    )
+      </div>
+    );
   }
 
   async onSubmit(values) {
-      await this.props.postEvent(values)
-      this.props.history.push('/')
+    await this.props.postEvent(values);
+    this.props.history.push('/');
   }
 
   render() {
-      const {handleSubmit } = this.props
+    const { handleSubmit, pristine, submitting, invalid } = this.props;
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <div>
@@ -51,18 +51,27 @@ class EventNew extends Component {
           />
         </div>
         <div>
-          <input type="submit" value="送信" disabled={false} />
+          <input
+            type="submit"
+            value="送信"
+            disabled={pristine || submitting || invalid}
+          />
           <Link to="/">Cancel</Link>
+          
+          
         </div>
       </form>
     );
   }
 }
-const validate = values => {
-    const errors = {}
-if(!values.title) errors.title = "Enter a title, please."
-if(!values.body) errors.body ="Enter a title, please"
-    return errors
-}
+const validate = (values) => {
+  const errors = {};
+  if (!values.title) errors.title = 'Enter a title, please.';
+  if (!values.body) errors.body = 'Enter a title, please';
+  return errors;
+};
 const mapDispatchToProps = { postEvent };
-export default connect(null, mapDispatchToProps)(reduxForm({validate, form: 'eventNewForm'})(EventNew));
+export default connect(
+  null,
+  mapDispatchToProps
+)(reduxForm({ validate, form: 'eventNewForm' })(EventNew));
